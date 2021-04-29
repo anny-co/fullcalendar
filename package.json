@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "fullcalendar-workspace",
+  "name": "@anny.co/fullcalendar-workspace",
   "version": "5.6.0-anny",
   "title": "FullCalendar",
   "description": "Full-sized drag & drop event calendar",
@@ -11,18 +11,16 @@
   ],
   "homepage": "https://fullcalendar.io/",
   "docs": "https://fullcalendar.io/docs",
-  "bugs": "https://fullcalendar.io/reporting-bugs",
+  "bugs": {
+    "url": "https://fullcalendar.io/reporting-bugs"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fullcalendar/fullcalendar.git",
+    "url": "git+https://github.com/fullcalendar/fullcalendar.git",
     "homepage": "https://github.com/fullcalendar/fullcalendar"
   },
   "license": "MIT",
-  "author": {
-    "name": "Adam Shaw",
-    "email": "arshaw@arshaw.com",
-    "url": "http://arshaw.com/"
-  },
+  "author": "Adam Shaw <arshaw@arshaw.com> (http://arshaw.com/)",
   "copyright": "2020 Adam Shaw",
   "workspaces": [
     "packages/*",
