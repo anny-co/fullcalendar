@@ -163,6 +163,11 @@ export { EventSource, EventSourceHash } from './structs/event-source'
 export { EventSourceRefiners, EventSourceRefined } from './structs/event-source-parse'
 
 export {
+  SegInput, SegRect, SegHierarchy, SegEntry, SegInsertion, buildEntryKey,
+  getEntrySpanEnd, binarySearch, SegEntryGroup, groupIntersectingEntries,
+} from './event-placement'
+
+export {
   Interaction,
   InteractionSettings,
   interactionSettingsToStore,

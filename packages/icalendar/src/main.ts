@@ -34,7 +34,7 @@ let eventSourceDef: EventSourceDef<ICalFeedMeta> = {
     let { meta } = arg.eventSource
     let { internalState } = meta
 
-    function handleIcalEvents(errorMessage, iCalEvents, xhr) {
+    function handleICalEvents(errorMessage, iCalEvents, xhr) {
       if (errorMessage) {
         onFailure({ message: errorMessage, xhr })
       } else {
@@ -42,10 +42,14 @@ let eventSourceDef: EventSourceDef<ICalFeedMeta> = {
       }
     }
 
-    if (!internalState) {
+    /*
+    NOTE: isRefetch is a HACK. we would do the recurring-expanding in a separate plugin hook,
+    but we couldn't leverage built-in allDay-guessing, among other things.
+    */
+    if (!internalState || arg.isRefetch) {
       internalState = meta.internalState = { // our ghetto Promise
         completed: false,
-        callbacks: [handleIcalEvents],
+        callbacks: [handleICalEvents],
         errorMessage: '',
         iCalEvents: [],
         xhr: null,
@@ -77,9 +81,9 @@ let eventSourceDef: EventSourceDef<ICalFeedMeta> = {
         },
       )
     } else if (!internalState.completed) {
-      internalState.callbacks.push(handleIcalEvents)
+      internalState.callbacks.push(handleICalEvents)
     } else {
-      handleIcalEvents(internalState.errorMessage, internalState.iCalEvents, internalState.xhr)
+      handleICalEvents(internalState.errorMessage, internalState.iCalEvents, internalState.xhr)
     }
   },
 }
@@ -151,7 +155,7 @@ function buildSingleEvent(iCalEvent: ICAL.Event): EventInput {
     start: iCalEvent.startDate.toString(),
     end: (specifiesEnd(iCalEvent) && iCalEvent.endDate)
       ? iCalEvent.endDate.toString()
-      : null
+      : null,
   }
 }
 
@@ -202,7 +206,7 @@ function buildNonDateProps(iCalEvent: ICAL.Event): EventInput {
       location: iCalEvent.location,
       organizer: iCalEvent.organizer,
       description: iCalEvent.description,
-    }
+    },
   }
 }
 
